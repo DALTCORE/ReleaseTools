@@ -1,0 +1,19 @@
+<?php
+
+define('APP_ROOT', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
+define('RUN_CWD', getcwd());
+
+include APP_ROOT . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+if (!isset($argv[1])) {
+    throw new Exception('Module parameter is missing');
+}
+
+$namespace = '\\DALTCORE\\ReleaseTools\\Modules\\' . $argv[1];
+
+if (class_exists($namespace)) {
+    return new $namespace();
+} else {
+    throw new \Exception('Module ' . $namespace . ' does not exist!');
+}
+

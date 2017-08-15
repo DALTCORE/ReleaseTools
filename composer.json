@@ -1,0 +1,27 @@
+{
+  "name": "daltcore/release-tools",
+  "description": "Release Tools for projects",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ramon Smit",
+      "email": "rsmit@daltcore.com"
+    }
+  ],
+  "require": {
+    "symfony/yaml": "^3.3",
+    "symfony/finder": "^3.3",
+    "m4tthumphrey/php-gitlab-api": "9.0.x-dev",
+    "php-http/guzzle6-adapter": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "DALTCORE\\ReleaseTools\\Modules\\": "Modules/",
+      "DALTCORE\\ReleaseTools\\Helpers\\": "Helpers/"
+    }
+  },
+  "bin": [
+    "bin/release"
+  ]
+}
