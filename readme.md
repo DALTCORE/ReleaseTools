@@ -7,6 +7,11 @@ Via composer:
 composer global require daltcore/release-tools
 ```
 
+Initialize ReleaseTools on current running repo. Creates .release-tools directory and .release-tool file.
+```bash
+release-tool init
+```
+
 ### Usage
 
 #### Development  
@@ -18,14 +23,19 @@ Adding a new changelog file to the repo
  `53` = Merge request id  
 `Author Name` = Your name; You made the merge request  (optional; the git author will be taken)
 ```bash
-php vendor/bin/release changelog 'Changelog description' '53' 'Author Name' 
+release-tool changelog 'Changelog description' 1337 'Author Name' 
 ```
 
 #### Releasing
 In development you want to run the prepare command which will create a issue in the repo that is specified in the .release-tools file
 
 ```bash
-php vendor/bin/release prepare 1.0.0
+release-tool release:prepare 1.0.0
+```
+
+Building changelog file 
+```bash
+release-tool build:changelog 1.0.0
 ```
 
 #### .release-tools file
