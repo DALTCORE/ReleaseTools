@@ -7,7 +7,7 @@ use DALTCORE\ReleaseTools\Helpers\Constants;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
-class GenerateChangelog
+class build_changelog
 {
     use ArgvHandler {
         ArgvHandler::build as protected builder;
