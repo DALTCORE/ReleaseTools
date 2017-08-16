@@ -3,5 +3,6 @@ vendor
 .release-tools
 /.release-tool/*
 .release-tool
+/changelogs
 /changelogs/*
 /CHANGELOG.md
