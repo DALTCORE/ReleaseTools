@@ -12,6 +12,15 @@ Initialize ReleaseTools on current running repo. Creates .release-tools director
 release-tool init
 ```
 
+Check if ReleaseTools is ready for use
+```bash
+release-tool status
+```
+
+_If you want to know more about thestructure behind ReleaseTools  
+then you can use the `-v` flag behind every command to see the  
+verbose info_
+
 ### Usage
 
 #### Development  

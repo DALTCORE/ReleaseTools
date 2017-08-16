@@ -1,8 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-use Symfony\Component\Console\Application;
-
 foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
     if (file_exists($file)) {
         require $file;
@@ -13,12 +11,13 @@ foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php
 
 define('PROJECT_ROOT', getcwd());
 
-$application = new Application();
+$application = new Symfony\Component\Console\Application();
 
 $application->add(new \DALTCORE\ReleaseTools\Modules\Init());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Prepare());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Changelog());
 $application->add(new \DALTCORE\ReleaseTools\Modules\BuildChangelog());
+$application->add(new \DALTCORE\ReleaseTools\Modules\Status());
 
 $application->run();
 
