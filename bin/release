@@ -1,9 +1,16 @@
+#!/usr/bin/env php
 <?php
 
-define('RELEASE_TOOLS_ROOT', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
+foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        require $file;
+        define('RELEASE_TOOLS_ROOT', dirname($file) . DIRECTORY_SEPARATOR . '..');
+        break;
+    }
+}
+
 define('PROJECT_ROOT', getcwd());
 
-include RELEASE_TOOLS_ROOT . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 if (!isset($argv[1])) {
     echo('Module parameter is missing' . PHP_EOL);
