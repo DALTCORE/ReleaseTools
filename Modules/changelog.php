@@ -38,7 +38,8 @@ class changelog
             'merge_request' => $this->arguments->merge_request
         ]);
 
-        $file = Constants::unreleased_dir() . DIRECTORY_SEPARATOR . Git::branch() . '.yaml';
+        $file = Constants::unreleased_dir() . DIRECTORY_SEPARATOR . str_replace(['/', '\\',], '-',
+                Git::branch()) . '.yaml';
 
         if (file_exists($file)) {
             echo('Already a release file made for this branch');
