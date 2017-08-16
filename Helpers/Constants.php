@@ -4,6 +4,17 @@ namespace DALTCORE\ReleaseTools\Helpers;
 
 class Constants
 {
+
+    /**
+     * Directory path with changelogs
+     *
+     * @return string
+     */
+    public static function changelog_dir()
+    {
+        return PROJECT_ROOT . DIRECTORY_SEPARATOR . 'changelogs';
+    }
+
     /**
      * Directory path with unreleased changelogs
      *
@@ -11,7 +22,7 @@ class Constants
      */
     public static function unreleased_dir()
     {
-        return PROJECT_ROOT . DIRECTORY_SEPARATOR . 'changelogs/unreleased';
+        return PROJECT_ROOT . DIRECTORY_SEPARATOR . 'changelogs'.DIRECTORY_SEPARATOR.'unreleased';
     }
 
     /**
@@ -21,7 +32,7 @@ class Constants
      */
     public static function released_dir()
     {
-        return PROJECT_ROOT . DIRECTORY_SEPARATOR . 'changelogs/released';
+        return PROJECT_ROOT . DIRECTORY_SEPARATOR . 'changelogs'.DIRECTORY_SEPARATOR.'released';
     }
 
     /**

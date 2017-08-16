@@ -2,6 +2,8 @@
 
 namespace DALTCORE\ReleaseTools\Helpers;
 
+use Gitlab\Client;
+
 class Gitlab
 {
     use ConfigReader;
@@ -16,12 +18,13 @@ class Gitlab
      */
     public static function prepareReleaseIssue($title, $description)
     {
-        $client = \Gitlab\Client::create(ConfigReader::get('api_url'))
-            ->authenticate(ConfigReader::get('api_key'), \Gitlab\Client::AUTH_URL_TOKEN);
 
-        return $client->issues()->create(ConfigReader::get('repo'), [
-            'project_id'  => ConfigReader::get('repo'),
-            'title'       => $title,
+        $client = new Client(ConfigReader::configGet('api_url'). '/api/v3/');
+        $client->authenticate(ConfigReader::configGet('api_key'), Client::AUTH_URL_TOKEN);
+
+        $project = new \Gitlab\Model\Project(ConfigReader::configGet('repo'), $client);
+
+        return $project->createIssue($title, [
             'description' => $description,
         ]);
     }

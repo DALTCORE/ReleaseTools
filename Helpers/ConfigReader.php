@@ -13,7 +13,7 @@ trait ConfigReader
      *
      * @return mixed
      */
-    public static function get($key = null)
+    public static function configGet($key = null)
     {
         $value = Yaml::parse(file_get_contents(PROJECT_ROOT . DIRECTORY_SEPARATOR . '.release-tool'));
 
