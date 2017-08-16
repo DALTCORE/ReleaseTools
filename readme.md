@@ -4,7 +4,7 @@
 
 Via composer:
 ```bash
-composer install daltcore/release-tools
+composer global require daltcore/release-tools
 ```
 
 ### Usage

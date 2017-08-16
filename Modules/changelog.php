@@ -43,6 +43,18 @@ class changelog
         if (file_exists($file)) {
             echo('Already a release file made for this branch');
             exit(1);
+        } else {
+            if (!file_exists(getcwd() . DIRECTORY_SEPARATOR . 'changelogs')) {
+                mkdir(getcwd() . DIRECTORY_SEPARATOR . 'changelogs');
+            }
+
+            if (!file_exists(Constants::unreleased_dir())) {
+                mkdir(Constants::unreleased_dir());
+            }
+
+            if (!file_exists(Constants::released_dir())) {
+                mkdir(Constants::released_dir());
+            }
         }
 
         file_put_contents($file, "---\n" . $yaml);

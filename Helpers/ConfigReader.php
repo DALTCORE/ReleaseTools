@@ -15,7 +15,7 @@ trait ConfigReader
      */
     public static function get($key = null)
     {
-        $value = Yaml::parse(file_get_contents(RUN_CWD . DIRECTORY_SEPARATOR . '.release-tools'));
+        $value = Yaml::parse(file_get_contents(PROJECT_ROOT . DIRECTORY_SEPARATOR . '.release-tools'));
 
         return $value[$key];
     }
