@@ -40,10 +40,12 @@ class prepare
         ) {
             $stub = file_get_contents(PROJECT_ROOT . DIRECTORY_SEPARATOR . '.release-tools' . DIRECTORY_SEPARATOR . 'stubs'
                 . DIRECTORY_SEPARATOR . 'prepare.stub');
-        } else {
+        } elseif ($fs->exists(RELEASE_TOOLS_ROOT . 'stubs' . DIRECTORY_SEPARATOR . 'prepare.stub')) {
             $stub = file_get_contents(RELEASE_TOOLS_ROOT . 'stubs' . DIRECTORY_SEPARATOR . 'prepare.stub');
+        } else {
+            die('prepare.stub is not found!');
+            exit(1);
         }
-
 
         $stub = str_replace(
             [':repo', ':version'],

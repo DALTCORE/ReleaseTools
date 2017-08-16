@@ -11,7 +11,7 @@ class Constants
      */
     public static function unreleased_dir()
     {
-        return getcwd() . DIRECTORY_SEPARATOR . 'changelogs/unreleased';
+        return PROJECT_ROOT . DIRECTORY_SEPARATOR . 'changelogs/unreleased';
     }
 
     /**
@@ -21,7 +21,7 @@ class Constants
      */
     public static function released_dir()
     {
-        return getcwd() . DIRECTORY_SEPARATOR . 'changelogs/released';
+        return PROJECT_ROOT . DIRECTORY_SEPARATOR . 'changelogs/released';
     }
 
     /**
@@ -31,6 +31,46 @@ class Constants
      */
     public static function changelog_file()
     {
-        return getcwd() . DIRECTORY_SEPARATOR . 'CHANGELOG.md';
+        return PROJECT_ROOT . DIRECTORY_SEPARATOR . 'CHANGELOG.md';
+    }
+
+    /**
+     * Release tools file path
+     *
+     * @return string
+     */
+    public static function release_tool_file()
+    {
+        return PROJECT_ROOT . DIRECTORY_SEPARATOR . '.release-tool';
+    }
+
+    /**
+     * Release tools directory path
+     *
+     * @return string
+     */
+    public static function release_tool_directory()
+    {
+        return PROJECT_ROOT . DIRECTORY_SEPARATOR . '.release-tools';
+    }
+
+    /**
+     * Projects stub directory
+     *
+     * @return string
+     */
+    public static function project_stub_directory()
+    {
+        return Constants::release_tool_directory() . DIRECTORY_SEPARATOR . 'stubs';
+    }
+
+    /**
+     * RT stub directory
+     *
+     * @return string
+     */
+    public static function release_tool_stub_directory()
+    {
+        return RELEASE_TOOLS_ROOT . DIRECTORY_SEPARATOR . 'stubs';
     }
 }
