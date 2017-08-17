@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "Checking if changelog is made for this branch";
+
+PROPOSEDCLGFILE=$(release-tool hooks:made-changelog cli);
+if [[ ! -f "$PROPOSEDCLGFILE" ]]; then
+  echo "Please run release-tool changelog 'title' 1337";
+    exit 1;
+fi

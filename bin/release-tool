@@ -13,11 +13,19 @@ define('PROJECT_ROOT', getcwd());
 
 $application = new Symfony\Component\Console\Application();
 
+/**
+ * Modules
+ */
 $application->add(new \DALTCORE\ReleaseTools\Modules\Init());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Prepare());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Changelog());
 $application->add(new \DALTCORE\ReleaseTools\Modules\BuildChangelog());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Status());
+
+/**
+ * Special hooks
+ */
+$application->add(new \DALTCORE\ReleaseTools\Modules\Hooks\MadeChangelog());
 
 $application->run();
 
