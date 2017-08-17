@@ -35,6 +35,11 @@ Adding a new changelog file to the repo
 release-tool changelog 'Changelog description' 1337 'Author Name' 
 ```
 
+Implement git hook to force you to make a changelog entry
+```bash
+release-tool hooks:made-changelog
+```
+
 #### Releasing
 In development you want to run the prepare command which will create a issue in the repo that is specified in the .release-tools file
 
