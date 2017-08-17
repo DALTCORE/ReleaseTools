@@ -1,5 +1,3 @@
-#!/bin/sh
-
 echo "Checking if changelog is made for this branch";
 
 PROPOSEDCLGFILE=$(release-tool hooks:made-changelog cli);

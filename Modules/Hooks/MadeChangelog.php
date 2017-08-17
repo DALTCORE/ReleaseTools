@@ -48,6 +48,7 @@ class MadeChangelog extends Command
 
         if (!$fileSystem->exists(Constants::project_git_pre_commit_hook_file())) {
             $fileSystem->touch(Constants::project_git_pre_commit_hook_file());
+            $fileSystem->appendToFile(Constants::project_git_pre_commit_hook_file(), "#!/bin/bash\n\n");
         }
 
         $data = file_get_contents(Constants::release_tools_pre_commit_hook_file());
