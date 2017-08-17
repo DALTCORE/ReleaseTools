@@ -77,7 +77,7 @@ class Status extends Command
         }
 
         CLI::output($output,
-            'ReleaseTools filesystem check: ' . ($this->readyState == true ? 'Valid' : 'Invalid. (run: release-tool init)'),
+            'ReleaseTools filesystem check: ' . ($this->readyState == true ? '<fg=green>Valid</>' : '<error>Invalid</error>. (run: release-tool init)'),
             CLI::INFO,
             0);
 

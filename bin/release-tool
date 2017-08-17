@@ -4,11 +4,11 @@
 foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
     if (file_exists($file)) {
         require $file;
-        define('RELEASE_TOOLS_ROOT', dirname($file) . DIRECTORY_SEPARATOR . '..');
         break;
     }
 }
 
+define('RELEASE_TOOLS_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..');
 define('PROJECT_ROOT', getcwd());
 
 $application = new Symfony\Component\Console\Application();

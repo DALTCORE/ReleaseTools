@@ -4,7 +4,8 @@ namespace DALTCORE\ReleaseTools\Helpers;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CLI {
+class CLI
+{
 
     const INFO = 32;
     const VERB = 64;
@@ -13,22 +14,23 @@ class CLI {
      * Write command to CLI
      *
      * @param OutputInterface $output
-     * @param $message
-     * @param $verb
+     * @param                 $message
+     * @param                 $verb
      */
-    public static function output(OutputInterface $output, $message, $verb, $level = 0) {
-        if($output->getVerbosity() >= $verb) {
+    public static function output(OutputInterface $output, $message, $verb, $level = 0)
+    {
+        if ($output->getVerbosity() >= $verb) {
 
-            if(CLI::VERB == $verb) {
+            if (CLI::VERB == $verb) {
                 $i = 0;
-                $prefix = '|';
+                $prefix = '<info>|</info>';
                 while ($i <= $level) {
-                    $prefix .= "--";
+                    $prefix .= "<info>--</info>";
                     $i++;
                 }
-                $output->writeLn($prefix . '[ReleaseTools] - ' . $message);
+                $output->writeLn($prefix . '<info>[ReleaseTools]</info> - ' . $message);
             } else {
-                $output->writeLn('[ReleaseTools] - ' . $message);
+                $output->writeLn('<info>[ReleaseTools]</info> - ' . $message);
             }
 
         }

@@ -15,7 +15,8 @@
     "m4tthumphrey/php-gitlab-api": "^8.0",
     "php-http/guzzle6-adapter": "^1.1",
     "symfony/filesystem": "^3.3",
-    "symfony/console": "^3.3"
+    "symfony/console": "^3.3",
+    "symfony/var-dumper": "^3.3"
   },
   "autoload": {
     "psr-4": {
