@@ -3,6 +3,7 @@
 namespace DALTCORE\ReleaseTools\Modules;
 
 use DALTCORE\ReleaseTools\Helpers\CLI;
+use DALTCORE\ReleaseTools\Helpers\ConfigReader;
 use DALTCORE\ReleaseTools\Helpers\Constants;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -70,11 +71,7 @@ class BuildChangelog extends Command
             if (!isset($value['merge_request'])) {
                 throw new \Exception('Changelog: ' . $value['title'] . ' does not have a Merge Request ID');
             }
-            if (!isset($this->mergeRequests[$value['type']])) {
-                $this->mergeRequests[$value['type']][] = $value;
-            } else {
-                continue;
-            }
+            $this->mergeRequests[$value['type']][] = $value;
         }
 
         /**
@@ -89,9 +86,25 @@ class BuildChangelog extends Command
          * Build the large file string that needs to be prepended to the changelog file
          */
         $this->prepender = "## " . $input->getArgument('version') . " (" . date('Y-m-d') . ")  \n";
-        foreach ($this->mergeRequests as $id => $value) {
-            $this->prepender .= "- " . $value['title'] . " !" . $value['merge_request'] . " (" . $value['author'] . ") \n";
+        foreach ($this->mergeRequests as $type => $items) {
+            $this->prepender .= "**" . $type . "**  \n";
+
+            foreach ($items as $value) {
+                $this->prepender .= "- " . $value['title'] . " [!" . $value['merge_request'] . "] (" .
+                    $value['author'] . ") \n";
+            }
+            $this->prepender .= "\n";
         }
+
+        foreach ($this->mergeRequests as $type => $items) {
+            foreach ($items as $value) {
+                $this->prepender .= "[!" . $value['merge_request'] . "]: <" . ConfigReader::configGet('api_url') . "/" .
+                    ConfigReader::configGet('repo') . "/merge_requests/" . $value['merge_request'] . "> \"!" .
+                    $value['merge_request'] . "\"" . PHP_EOL;
+            }
+        }
+
+        // (" . ConfigReader::configGet('api_url') . "/". ConfigReader::configGet('repo') . "/merge_requests/" . $value['merge_request'] . ")
 
         if (!$filesystem->exists(Constants::changelog_file())) {
             $filesystem->touch(Constants::changelog_file());
