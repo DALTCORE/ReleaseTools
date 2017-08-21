@@ -50,6 +50,17 @@ _For testing you can use `--dry-run` as parameter_
 ```bash
 release-tool build:changelog
 ```
+List all pending changelogs
+```bash
+release-tool list:changelog
+``` 
+```text
++-------------------+------------+---------------+--------------+
+| Title             | Author     | Merge Request | Type         |
++-------------------+------------+---------------+--------------+
+| this is a test MR | Ramon Smit | 1             | Security fix |
++-------------------+------------+---------------+--------------+
+```
 
 #### .release-tools file
 ```yaml
