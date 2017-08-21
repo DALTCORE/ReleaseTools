@@ -6,10 +6,12 @@ use DALTCORE\ReleaseTools\Helpers\CLI;
 use DALTCORE\ReleaseTools\Helpers\ConfigReader;
 use DALTCORE\ReleaseTools\Helpers\Constants;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -33,7 +35,7 @@ class BuildChangelog extends Command
             ->setHelp('Prepend changelog entries to changelog')
             ->setDefinition(
                 new InputDefinition(array(
-                    new InputArgument('version', InputArgument::REQUIRED, 'Version to prepend'),
+                    new InputOption('dry-run', 'dr', InputOption::VALUE_OPTIONAL, 'Dry Run method', false),
                 )));
     }
 
@@ -66,6 +68,21 @@ class BuildChangelog extends Command
 
         $finder->files()->in(Constants::unreleased_dir());
 
+        $helper = $this->getHelper('question');
+
+        $helper = $this->getHelper('question');
+        $question = new Question('Release for version :' . PHP_EOL, 0);
+        $version = $helper->ask($input, $output, $question);
+
+        $question = new ConfirmationQuestion(
+            'Continue with this action? (y/n) :' . PHP_EOL,
+            false,
+            '/^(y|j)/i'
+        );
+        if (!$helper->ask($input, $output, $question)) {
+            return;
+        }
+
         foreach ($finder as $file) {
             $value = Yaml::parse(file_get_contents($file->getRealPath()));
             if (!isset($value['merge_request'])) {
@@ -85,7 +102,7 @@ class BuildChangelog extends Command
         /**
          * Build the large file string that needs to be prepended to the changelog file
          */
-        $this->prepender = "## " . $input->getArgument('version') . " (" . date('Y-m-d') . ")  \n";
+        $this->prepender = "## " . $version . " (" . date('Y-m-d') . ")  \n\n";
         foreach ($this->mergeRequests as $type => $items) {
             $this->prepender .= "**" . $type . "**  \n";
 
@@ -110,20 +127,26 @@ class BuildChangelog extends Command
             $filesystem->touch(Constants::changelog_file());
         }
 
-        /**
-         * Merge changelog data
-         */
         $data = file_get_contents(Constants::changelog_file());
         $data = $this->prepender . "\n\n" . $data;
-        if ($filesystem->dumpFile(Constants::changelog_file(), $data) !== false) {
-            CLI::output($output, 'Changelog is created!', CLI::VERB, 1);
+
+        if ($input->getOption('dry-run') !== false) {
+            $output->write($data);
+        } else {
+            /**
+             * Merge changelog data
+             */
+            if ($filesystem->dumpFile(Constants::changelog_file(), $data) !== false) {
+                CLI::output($output, 'Changelog is created!', CLI::VERB, 1);
+            }
+
+            /**
+             * Move old changelog files
+             */
+            foreach ($finder as $file) {
+                $filesystem->rename($file, Constants::released_dir() . DIRECTORY_SEPARATOR . $file->getBasename());
+            }
         }
 
-        /**
-         * Move old changelog files
-         */
-        foreach ($finder as $file) {
-            $filesystem->rename($file, Constants::released_dir() . DIRECTORY_SEPARATOR . $file->getBasename());
-        }
     }
 }
