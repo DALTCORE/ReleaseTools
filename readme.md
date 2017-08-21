@@ -27,12 +27,10 @@ verbose info_
 In development you should make a new branch for all your features/changes.   
 Release tools makes use of the current branch name for file naming for the changelog files.
 
-Adding a new changelog file to the repo  
-`Changelog description` = A small description for the changelog   
- `53` = Merge request id  
-`Author Name` = Your name; You made the merge request  (optional; the git author will be taken)
+Adding a new changelog file to the repo, this command is interactive.  
+_For testing you can use `--dry-run` as parameter_
 ```bash
-release-tool changelog 'Changelog description' 1337 'Author Name' 
+release-tool changelog 
 ```
 
 Implement git hook to force you to make a changelog entry
@@ -41,15 +39,16 @@ release-tool hooks:made-changelog
 ```
 
 #### Releasing
-In development you want to run the prepare command which will create a issue in the repo that is specified in the .release-tools file
-
+In development you want to run the prepare command which will create a issue in the repo that is specified in the .release-tools file  
+_For testing you can use `--dry-run` as parameter_
 ```bash
-release-tool release:prepare 1.0.0
+release-tool release:prepare
 ```
 
-Building changelog file 
+Building changelog file   
+_For testing you can use `--dry-run` as parameter_
 ```bash
-release-tool build:changelog 1.0.0
+release-tool build:changelog
 ```
 
 #### .release-tools file
