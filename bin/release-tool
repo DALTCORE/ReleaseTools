@@ -11,7 +11,14 @@ foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php
 define('RELEASE_TOOLS_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..');
 define('PROJECT_ROOT', getcwd());
 
+$dispatcher = new Symfony\Component\EventDispatcher\EventDispatcher();
 $application = new Symfony\Component\Console\Application();
+
+/**
+ * Event Listners
+ */
+$listener = new \DALTCORE\ReleaseTools\Events\PreflightChecks();
+$dispatcher->addListener('preflightchecks.begin', [$listener, 'begin']);
 
 /**
  * Modules

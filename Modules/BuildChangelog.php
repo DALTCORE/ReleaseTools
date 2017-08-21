@@ -2,18 +2,14 @@
 
 namespace DALTCORE\ReleaseTools\Modules;
 
-use DALTCORE\ReleaseTools\Helpers\ArgvHandler;
 use DALTCORE\ReleaseTools\Helpers\CLI;
-use DALTCORE\ReleaseTools\Helpers\ConfigReader;
 use DALTCORE\ReleaseTools\Helpers\Constants;
-use DALTCORE\ReleaseTools\Helpers\Exceptions\ChangelogExistsException;
-use DALTCORE\ReleaseTools\Helpers\Git;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Debug\Debug;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
@@ -29,41 +25,41 @@ class BuildChangelog extends Command
         $this
             // the name of the command (the part after "bin/console")
             ->setName('build:changelog')
-
             // the short description shown while running "php bin/console list"
             ->setDescription('Prepend changelog entries to changelog')
-
             // the full command description shown when running the command with
             // the "--help" option
             ->setHelp('Prepend changelog entries to changelog')
-
             ->setDefinition(
                 new InputDefinition(array(
                     new InputArgument('version', InputArgument::REQUIRED, 'Version to prepend'),
-                )))
-
-        ;
+                )));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
+        global $dispatcher;
+        $event = new GenericEvent(
+            $this,
+            compact('input', 'output')
+        );
+        $dispatcher->dispatch('preflightchecks.begin', $event);
+
         CLI::output($output, 'Creating CHANGELOG.md', CLI::INFO);
 
         $finder = new Finder();
         $filesystem = new Filesystem();
 
-        if(!$filesystem->exists(Constants::changelog_dir()))
-        {
+        if (!$filesystem->exists(Constants::changelog_dir())) {
             $filesystem->mkdir(Constants::changelog_dir());
         }
 
-        if(!$filesystem->exists(Constants::unreleased_dir()))
-        {
+        if (!$filesystem->exists(Constants::unreleased_dir())) {
             $filesystem->mkdir(Constants::unreleased_dir());
         }
 
-        if(!$filesystem->exists(Constants::released_dir()))
-        {
+        if (!$filesystem->exists(Constants::released_dir())) {
             $filesystem->mkdir(Constants::released_dir());
         }
 
@@ -97,8 +93,7 @@ class BuildChangelog extends Command
             $this->prepender .= "- " . $value['title'] . " !" . $value['merge_request'] . " (" . $value['author'] . ") \n";
         }
 
-        if(!$filesystem->exists(Constants::changelog_file()))
-        {
+        if (!$filesystem->exists(Constants::changelog_file())) {
             $filesystem->touch(Constants::changelog_file());
         }
 

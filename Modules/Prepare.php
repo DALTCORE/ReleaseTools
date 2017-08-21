@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -46,6 +47,14 @@ class Prepare extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
+        global $dispatcher;
+        $event = new GenericEvent(
+            $this,
+            compact('input', 'output')
+        );
+        $dispatcher->dispatch('preflightchecks.begin', $event);
+
         CLI::output($output, 'Setting up release v' . $input->getArgument('version') . ' for ' . self::configGet('repo'), CLI::INFO, 0);
 
 

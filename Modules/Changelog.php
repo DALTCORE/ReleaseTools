@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
@@ -36,6 +37,14 @@ class Changelog extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
+        global $dispatcher;
+        $event = new GenericEvent(
+            $this,
+            compact('input', 'output')
+        );
+        $dispatcher->dispatch('preflightchecks.begin', $event);
+
         CLI::output($output, 'Creating changelog entry', CLI::INFO);
 
         CLI::output($output, 'Building YAML file', CLI::VERB, 1);

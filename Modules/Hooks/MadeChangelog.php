@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -37,6 +38,13 @@ class MadeChangelog extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
+        global $dispatcher;
+        $event = new GenericEvent(
+            $this,
+            compact('input', 'output')
+        );
+        $dispatcher->dispatch('preflightchecks.begin', $event);
 
         if ($input->getArgument('cli')) {
             $output->write(Constants::current_changelog());

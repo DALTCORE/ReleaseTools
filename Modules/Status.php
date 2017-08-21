@@ -7,6 +7,7 @@ use DALTCORE\ReleaseTools\Helpers\Constants;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -29,52 +30,15 @@ class Status extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        global $dispatcher;
+        $event = new GenericEvent(
+            $this,
+            compact('input', 'output')
+        );
+        $dispatcher->dispatch('preflightchecks.begin', $event);
 
-        // $output->setVerbosity(CLI::VERB);
-
-        CLI::output($output, 'Status of ReleaseTools', CLI::INFO);
         $filesystem = new Filesystem();
         $finder = new Finder();
-
-        CLI::output($output, 'Check if .release-tool file exists on project level', CLI::VERB, 1);
-        if ($filesystem->exists(Constants::release_tool_file())) {
-            CLI::output($output, 'The .release-tool file is found', CLI::VERB, 2);
-        } else {
-            $this->readyState = false;
-            CLI::output($output, 'The .release-tool file is not found', CLI::VERB, 2);
-        }
-
-        CLI::output($output, 'Check if /.release-tools directory exists on project level', CLI::VERB, 1);
-        if ($filesystem->exists(Constants::release_tool_directory())) {
-            CLI::output($output, 'The /.release-tools directory is found', CLI::VERB, 2);
-        } else {
-            $this->readyState = false;
-            CLI::output($output, 'The /.release-tools directory is not found', CLI::VERB, 2);
-        }
-
-        CLI::output($output, 'Check if /changelogs directory exists on project level', CLI::VERB, 1);
-        if ($filesystem->exists(Constants::changelog_dir())) {
-            CLI::output($output, 'The /changelogs directory is found', CLI::VERB, 2);
-        } else {
-            $this->readyState = false;
-            CLI::output($output, 'The /changelogs directory is not found', CLI::VERB, 2);
-        }
-
-        CLI::output($output, 'Check if /changelogs/unreleased directory exists on project level', CLI::VERB, 1);
-        if ($filesystem->exists(Constants::unreleased_dir())) {
-            CLI::output($output, 'The /changelogs/unreleased directory is found', CLI::VERB, 2);
-        } else {
-            $this->readyState = false;
-            CLI::output($output, 'The /changelogs/unreleased directory is not found', CLI::VERB, 2);
-        }
-
-        CLI::output($output, 'Check if /changelogs/released directory exists on project level', CLI::VERB, 1);
-        if ($filesystem->exists(Constants::released_dir())) {
-            CLI::output($output, 'The /changelogs/released directory is found', CLI::VERB, 2);
-        } else {
-            $this->readyState = false;
-            CLI::output($output, 'The /changelogs/released directory is not found', CLI::VERB, 2);
-        }
 
         CLI::output($output,
             'ReleaseTools filesystem check: ' . ($this->readyState == true ? '<fg=green>Valid</>' : '<error>Invalid</error>. (run: release-tool init)'),
