@@ -7,10 +7,12 @@ use DALTCORE\ReleaseTools\Helpers\Constants;
 use DALTCORE\ReleaseTools\Helpers\Exceptions\ChangelogExistsException;
 use DALTCORE\ReleaseTools\Helpers\Git;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
@@ -29,15 +31,12 @@ class Changelog extends Command
             ->setHelp('Add a new changelog entry file')
             ->setDefinition(
                 new InputDefinition(array(
-                    new InputArgument('title', InputArgument::REQUIRED, 'Changelog entry title'),
-                    new InputArgument('merge_request_id', InputArgument::REQUIRED, 'Merge request ID'),
-                    new InputArgument('author', InputArgument::OPTIONAL, 'Merge request author'),
+                    new InputOption('dry-run', 'dr', InputOption::VALUE_OPTIONAL, 'Dry Run method', false),
                 )));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         global $dispatcher;
         $event = new GenericEvent(
             $this,
@@ -45,13 +44,42 @@ class Changelog extends Command
         );
         $dispatcher->dispatch('preflightchecks.begin', $event);
 
+        $helper = $this->getHelper('question');
+        $question = new Question('What is the title of the merge request? [\'\'] :' . PHP_EOL, null);
+        $title = $helper->ask($input, $output, $question);
+
+        $helper = $this->getHelper('question');
+        $question = new Question('Who is the author of this merge request? [' . Git::author() . '] :' . PHP_EOL,
+            Git::author());
+        $author = $helper->ask($input, $output, $question);
+
+        $helper = $this->getHelper('question');
+        $question = new Question('What is the ID of the merge request? [0] :' . PHP_EOL, 0);
+        $mrId = $helper->ask($input, $output, $question);
+
+        $question = new ChoiceQuestion(
+            'Please select a type for this Merge Request : ' . PHP_EOL, [
+            'New feature',
+            'Bug fix',
+            'Feature change',
+            'New deprecation',
+            'Feature removal',
+            'Security fix',
+            'Style fix',
+            'Other',
+        ],
+            '7'
+        );
+        $type = $helper->ask($input, $output, $question);
+
         CLI::output($output, 'Creating changelog entry', CLI::INFO);
 
         CLI::output($output, 'Building YAML file', CLI::VERB, 1);
         $yaml = Yaml::dump([
-            'title'         => $input->getArgument('title'),
-            'author'        => ($input->getArgument('author') == null ? Git::author() : $input->getArgument('author')),
-            'merge_request' => $input->getArgument('merge_request_id')
+            'title'         => $title,
+            'author'        => $author,
+            'merge_request' => $mrId,
+            'type'          => $type
         ]);
 
         CLI::output($output, 'Building YAML file path', CLI::VERB, 1);
@@ -65,6 +93,12 @@ class Changelog extends Command
         }
 
         CLI::output($output, 'Created changelog file', CLI::VERB, 2);
-        $fs->dumpFile($file, $yaml);
+
+        if ($input->getOption('dry-run') !== false) {
+            $output->write($yaml);
+        } else {
+            $fs->dumpFile($file, $yaml);
+        }
+
     }
 }

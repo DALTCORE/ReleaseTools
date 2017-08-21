@@ -70,8 +70,8 @@ class BuildChangelog extends Command
             if (!isset($value['merge_request'])) {
                 throw new \Exception('Changelog: ' . $value['title'] . ' does not have a Merge Request ID');
             }
-            if (!isset($this->mergeRequests[$value['merge_request']])) {
-                $this->mergeRequests[$value['merge_request']] = $value;
+            if (!isset($this->mergeRequests[$value['type']])) {
+                $this->mergeRequests[$value['type']][] = $value;
             } else {
                 continue;
             }

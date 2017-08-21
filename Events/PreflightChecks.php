@@ -20,6 +20,14 @@ class PreflightChecks
         $filesystem = new Filesystem();
 
         // $event['output']->setVerbosity(CLI::VERB);
+
+        if (!$filesystem->exists(Constants::project_git())) {
+            $event['output']->setVerbosity(CLI::VERB);
+            CLI::output($event['output'], '<error>Warning: .git directory does not exist in this project!</error>',
+                CLI::VERB,
+                2);
+        }
+
         if ($filesystem->exists(Constants::release_tool_file())) {
             CLI::output($event['output'], 'The .release-tool file is found', CLI::VERB, 2);
         } else {
@@ -65,5 +73,4 @@ class PreflightChecks
             exit(1);
         }
     }
-
 }
