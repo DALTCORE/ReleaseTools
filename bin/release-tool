@@ -28,6 +28,7 @@ $application->add(new \DALTCORE\ReleaseTools\Modules\Prepare());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Changelog());
 $application->add(new \DALTCORE\ReleaseTools\Modules\BuildChangelog());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Status());
+$application->add(new \DALTCORE\ReleaseTools\Modules\ListChangelog());
 
 /**
  * Special hooks
