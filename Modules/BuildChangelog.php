@@ -84,7 +84,7 @@ class BuildChangelog extends Command
         }
 
         foreach ($finder as $file) {
-            $value = Yaml::parse(file_get_contents($file->getRealPath()));
+            $value = Yaml::parse(file_get_contents($file->getPathname()));
             if (!isset($value['merge_request'])) {
                 throw new \Exception('Changelog: ' . $value['title'] . ' does not have a Merge Request ID');
             }
