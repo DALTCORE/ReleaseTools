@@ -19,57 +19,60 @@ class PreflightChecks
     {
         $filesystem = new Filesystem();
 
+        $error = false;
+
         // $event['output']->setVerbosity(CLI::VERB);
 
         if (!$filesystem->exists(Constants::project_git())) {
             $event['output']->setVerbosity(CLI::VERB);
-            CLI::output($event['output'], '<error>Warning: .git directory does not exist in this project!</error>',
+            CLI::output($event['output'], '<error>Warning: .git ('.Constants::project_git().') directory does not exist in this project!</error>',
                 CLI::VERB,
-                2);
+                0);
         }
 
         if ($filesystem->exists(Constants::release_tool_file())) {
-            CLI::output($event['output'], 'The .release-tool file is found', CLI::VERB, 2);
+            CLI::output($event['output'], 'Release tool file: <fg=yellow>'.Constants::release_tool_file().'</>: <fg=green>OK</>', CLI::VERB, 0);
         } else {
             $event['output']->setVerbosity(CLI::VERB);
-            CLI::output($event['output'], 'The .release-tool file is not found', CLI::VERB, 2);
-            CLI::output($event['output'], 'Try running: "release-tool init" from this directory', CLI::VERB, 3);
-            exit(1);
+            CLI::output($event['output'], 'Release tool file: <fg=yellow>'.Constants::release_tool_file().'</>: <fg=red>ERROR</>', CLI::VERB, 0);
+            $error = true;
         }
 
         if ($filesystem->exists(Constants::release_tool_directory())) {
-            CLI::output($event['output'], 'The /.release-tools directory is found', CLI::VERB, 2);
+            CLI::output($event['output'], 'Release tool dir: <fg=yellow>'.Constants::release_tool_directory().'</>: <fg=green>OK</>', CLI::VERB, 0);
         } else {
             $event['output']->setVerbosity(CLI::VERB);
-            CLI::output($event['output'], 'The /.release-tools directory is not found', CLI::VERB, 2);
-            CLI::output($event['output'], 'Try running: "release-tool init" from this directory', CLI::VERB, 3);
-            exit(1);
+            CLI::output($event['output'], 'Release tool dir: <fg=yellow>'.Constants::release_tool_directory().'</>: <fg=red>ERROR</>', CLI::VERB, 0);
+            $error = true;
         }
 
         if ($filesystem->exists(Constants::changelog_dir())) {
-            CLI::output($event['output'], 'The /changelogs directory is found', CLI::VERB, 2);
+            CLI::output($event['output'], 'Changelog dir: <fg=yellow>'.Constants::changelog_dir().'</>: <fg=green>OK</>', CLI::VERB, 0);
         } else {
             $event['output']->setVerbosity(CLI::VERB);
-            CLI::output($event['output'], 'The /changelogs directory is not found', CLI::VERB, 2);
-            CLI::output($event['output'], 'Try running: "release-tool init" from this directory', CLI::VERB, 3);
-            exit(1);
+            CLI::output($event['output'], 'Changelog dir: <fg=yellow>'.Constants::changelog_dir().'</>: <fg=red>ERROR</>', CLI::VERB, 0);
+            $error = true;
         }
 
         if ($filesystem->exists(Constants::unreleased_dir())) {
-            CLI::output($event['output'], 'The /changelogs/unreleased directory is found', CLI::VERB, 2);
+            CLI::output($event['output'], 'Unreleased dir: <fg=yellow>'.Constants::unreleased_dir().'</>: <fg=green>OK</>', CLI::VERB, 0);
         } else {
             $event['output']->setVerbosity(CLI::VERB);
-            CLI::output($event['output'], 'The /changelogs/unreleased directory is not found', CLI::VERB, 2);
-            CLI::output($event['output'], 'Try running: "release-tool init" from this directory', CLI::VERB, 3);
-            exit(1);
+            CLI::output($event['output'], 'Unreleased dir: <fg=yellow>'.Constants::unreleased_dir().'</>: <fg=red>ERROR</>', CLI::VERB, 0);
+            $error = true;
         }
 
         if ($filesystem->exists(Constants::released_dir())) {
-            CLI::output($event['output'], 'The /changelogs/released directory is found', CLI::VERB, 2);
+            CLI::output($event['output'], 'Released dir: <fg=yellow>'.Constants::released_dir().'</>: <fg=green>OK</>', CLI::VERB, 0);
         } else {
             $event['output']->setVerbosity(CLI::VERB);
-            CLI::output($event['output'], 'The /changelogs/released directory is not found', CLI::VERB, 2);
-            CLI::output($event['output'], 'Try running: "release-tool init" from this directory', CLI::VERB, 3);
+            CLI::output($event['output'], 'Released dir: <fg=yellow>'.Constants::released_dir().'</>: <fg=red>ERROR</>', CLI::VERB, 0);
+            $error = true;
+        }
+
+        if($error)
+        {
+            CLI::output($event['output'], 'Try running: "release-tool init" from this directory', CLI::VERB, 0);
             exit(1);
         }
     }

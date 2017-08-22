@@ -40,6 +40,9 @@ class Status extends Command
         $filesystem = new Filesystem();
         $finder = new Finder();
 
+        CLI::output($output, 'ReleaseTools path: <fg=yellow>' . RELEASE_TOOLS_ROOT.'</>', CLI::INFO);
+        CLI::output($output, 'Project path: <fg=yellow>' . PROJECT_ROOT .'</>', CLI::INFO);
+
         CLI::output($output,
             'ReleaseTools filesystem check: ' . ($this->readyState == true ? '<fg=green>Valid</>' : '<error>Invalid</error>. (run: release-tool init)'),
             CLI::INFO,

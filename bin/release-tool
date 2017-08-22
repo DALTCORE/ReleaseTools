@@ -8,9 +8,6 @@ foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php
     }
 }
 
-define('RELEASE_TOOLS_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..');
-define('PROJECT_ROOT', getcwd());
-
 function dd(...$arguments)
 {
     dump(func_get_args());
@@ -21,6 +18,15 @@ function isPhar()
 {
     return !empty(Phar::running());
 }
+
+if(isPhar())
+{
+    define('RELEASE_TOOLS_ROOT', \Phar::running());
+} else {
+    define('RELEASE_TOOLS_ROOT', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
+}
+
+define('PROJECT_ROOT', getcwd());
 
 $dispatcher = new Symfony\Component\EventDispatcher\EventDispatcher();
 $application = new Symfony\Component\Console\Application("ReleaseTools", '@package_version@');

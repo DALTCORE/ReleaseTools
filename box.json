@@ -4,7 +4,9 @@
         "."
     ],
     "files": [
-        "readme.md"
+        "readme.md",
+        ".release-tool.example",
+        "stubs/prepare.stub"
     ],
     "finder": [
         {

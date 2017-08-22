@@ -72,10 +72,12 @@ class Init extends Command
 
             CLI::output($output, 'Copying stub files from ReleaseTools to project', CLI::VERB, 1);
             $finder = new Finder();
+            
             $finder->files()->in(Constants::release_tool_stub_directory());
             foreach ($finder as $file) {
                 CLI::output($output, 'Copying ' . $file->getFilename(), CLI::VERB, 2);
-                $filesystem->copy($file->getRealPath(),
+
+                $filesystem->copy($file->getPathname(),
                     Constants::project_stub_directory() . DIRECTORY_SEPARATOR . $file->getFilename());
             }
 

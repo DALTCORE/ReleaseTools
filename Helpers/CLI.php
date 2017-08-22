@@ -21,7 +21,7 @@ class CLI
     {
         if ($output->getVerbosity() >= $verb) {
 
-            if (CLI::VERB == $verb) {
+            if (CLI::VERB == $verb && $level > 0) {
                 $i = 0;
                 $prefix = '<info>|</info>';
                 while ($i <= $level) {
