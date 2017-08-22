@@ -31,7 +31,7 @@ class Update extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        global $dispatcher;
+        global $dispatcher, $argv;
 
         $client = new Client([
             'base_uri'        => 'https://api.github.com/',
@@ -55,10 +55,10 @@ class Update extends Command
         {
             CLI::output($output, 'You are already on the latest version of Release Tools ('.$version.')', CLI::INFO);
         } else {
-            CLI::output($output, 'Downloading '.$release->tag_name.' to ./release-tool.phar now.', CLI::INFO);
+            CLI::output($output, 'Downloading '.$release->tag_name.' to '.$argv[0].' now.', CLI::INFO);
             sleep(0.5);
             $client->request('GET', $release->assets[0]->browser_download_url, [
-                'sink' => './release-tool.phar',
+                'sink' => $argv[0],
             ]);
             CLI::output($output, 'Download complete!', CLI::INFO);
         }
