@@ -6,3 +6,4 @@ vendor
 /changelogs
 /changelogs/*
 /CHANGELOG.md
+release-tool.phar
