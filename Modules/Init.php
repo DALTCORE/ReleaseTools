@@ -50,9 +50,19 @@ class Init extends Command
         CLI::output($output, 'Check if /changelogs directory exists on project level', CLI::VERB);
         if ($filesystem->exists(Constants::changelog_dir()) == false) {
             $filesystem->mkdir(Constants::changelog_dir());
-            $filesystem->mkdir(Constants::unreleased_dir());
-            $filesystem->mkdir(Constants::released_dir());
             CLI::output($output, 'Created /changelogs directory on project level', CLI::VERB, 1);
+        }
+
+        CLI::output($output, 'Check if /changelogs/unreleased directory exists on project level', CLI::VERB);
+        if ($filesystem->exists(Constants::unreleased_dir()) == false) {
+            $filesystem->mkdir(Constants::unreleased_dir());
+            CLI::output($output, 'Created /changelogs/unreleased directory on project level', CLI::VERB, 1);
+        }
+
+        CLI::output($output, 'Check if /changelogs/released directory exists on project level', CLI::VERB);
+        if ($filesystem->exists(Constants::released_dir()) == false) {
+            $filesystem->mkdir(Constants::released_dir());
+            CLI::output($output, 'Created /changelogs/released directory on project level', CLI::VERB, 1);
         }
 
         CLI::output($output, 'Check if /.release-tools/stub directory exists on project level', CLI::VERB);

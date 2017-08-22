@@ -4,7 +4,6 @@ namespace DALTCORE\ReleaseTools\Helpers;
 
 class Constants
 {
-
     /**
      * Directory path with changelogs
      *
@@ -92,6 +91,26 @@ class Constants
     public static function release_tool_stub_directory()
     {
         return RELEASE_TOOLS_ROOT . DIRECTORY_SEPARATOR . 'stubs';
+    }
+
+    /**
+     * Projects playbook directory
+     *
+     * @return string
+     */
+    public static function project_playbook_directory()
+    {
+        return Constants::release_tool_directory() . DIRECTORY_SEPARATOR . 'playbooks';
+    }
+
+    /**
+     * RT playbook directory
+     *
+     * @return string
+     */
+    public static function release_tool_playbook_directory()
+    {
+        return RELEASE_TOOLS_ROOT . DIRECTORY_SEPARATOR . 'playbooks';
     }
 
     /**

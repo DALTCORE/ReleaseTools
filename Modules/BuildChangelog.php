@@ -104,7 +104,7 @@ class BuildChangelog extends Command
          */
         $this->prepender = "## " . $version . " (" . date('Y-m-d') . ")  \n\n";
         foreach ($this->mergeRequests as $type => $items) {
-            $this->prepender .= "**" . $type . "**  \n";
+            $this->prepender .= "**" . $type . "**  \n\n";
 
             foreach ($items as $value) {
                 $this->prepender .= "- " . $value['title'] . " [!" . $value['merge_request'] . "] (" .

@@ -2,3 +2,4 @@
 repo: group/repo
 api_url: https://gitlab.com
 api_key: AbC123DeF456Ghi789
+mattermost_webhook: https://mattermost.gitco.re/hooks/de1pqpn9dprmj8k363ajiuqr6h

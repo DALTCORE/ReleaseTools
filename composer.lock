@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ae43da171fa165204e3cc89a14f3f41",
+    "content-hash": "e08887a3282e89280e933a077f65e1fc",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1475,6 +1475,44 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2017-07-23T12:43:26+00:00"
+        },
+        {
+            "name": "thibaud-dauce/mattermost-php",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ThibaudDauce/mattermost-php.git",
+                "reference": "989a14cc9cff53e978f8c6cbd68d9bd8ace87623"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ThibaudDauce/mattermost-php/zipball/989a14cc9cff53e978f8c6cbd68d9bd8ace87623",
+                "reference": "989a14cc9cff53e978f8c6cbd68d9bd8ace87623",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ThibaudDauce\\Mattermost\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thibaud Dauce",
+                    "email": "thibaud@dauce.fr",
+                    "homepage": "https://www.formations-laravel.fr"
+                }
+            ],
+            "description": "Mattermost PHP driver to send incoming webhooks",
+            "homepage": "https://github.com/thibaud-dauce/mattermost-php",
+            "time": "2016-08-29T15:53:13+00:00"
         }
     ],
     "packages-dev": [],
