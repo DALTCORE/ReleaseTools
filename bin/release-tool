@@ -17,6 +17,11 @@ function dd(...$arguments)
     die;
 }
 
+function isPhar()
+{
+    return !empty(Phar::running());
+}
+
 $dispatcher = new Symfony\Component\EventDispatcher\EventDispatcher();
 $application = new Symfony\Component\Console\Application("ReleaseTools", '@package_version@');
 
@@ -36,6 +41,12 @@ $application->add(new \DALTCORE\ReleaseTools\Modules\BuildChangelog());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Status());
 $application->add(new \DALTCORE\ReleaseTools\Modules\ListChangelog());
 $application->add(new \DALTCORE\ReleaseTools\Modules\Playbook());
+
+
+if(isPhar())
+{
+    $application->add(new \DALTCORE\ReleaseTools\Modules\Update());
+}
 
 /**
  * Special hooks
