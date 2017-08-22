@@ -7,3 +7,4 @@ vendor
 /changelogs/*
 /CHANGELOG.md
 release-tool.phar
+.DS_Store
