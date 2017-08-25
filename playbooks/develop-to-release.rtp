@@ -4,13 +4,3 @@ playbook:
     make_branch:
       from: develop
       to: releases/:version
-
-    tag:
-      from: releases/:version
-      version: v:version
-
-#    merge_request:
-#      branches: releases/:version > master
-
-#    merge_request:
-#      branches: master > develop

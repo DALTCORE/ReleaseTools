@@ -1,22 +1,28 @@
 {
-    "chmod": "0755",
-    "directories": [
-        "."
-    ],
-    "files": [
-        "readme.md",
-        ".release-tool.example",
-        "stubs/prepare.stub"
-    ],
-    "finder": [
-        {
-            "name": "*.php",
-            "exclude": [".releasetools", "changelogs", ".release-tool", "JSON"],
-            "in": "vendor"
-        }
-    ],
-    "git-version": "package_version",
-    "main": "bin/release-tool",
-    "output": "release-tool.phar",
-    "stub": true
+  "chmod": "0755",
+  "directories": [
+    "."
+  ],
+  "files": [
+    "readme.md",
+    ".release-tool.example",
+    "stubs/prepare.stub"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": [
+        ".releasetools",
+        "changelogs",
+        ".release-tool",
+        "JSON"
+      ],
+      "in": "vendor"
+    }
+  ],
+  "git-version": "package_version",
+  "main": "bin/release-tool",
+  "output": "release-tool.phar",
+  "compression": "BZ2",
+  "stub": true
 }

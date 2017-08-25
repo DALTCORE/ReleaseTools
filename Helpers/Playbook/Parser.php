@@ -20,7 +20,7 @@ class Parser
     /**
      * Parser constructor.
      *
-     * @param                                                   $playbookArray
+     * @param                                                   $playbook
      * @param null                                              $args
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param \Symfony\Component\Console\Input\InputInterface   $input
@@ -28,7 +28,7 @@ class Parser
      *
      * @throws \Exception
      */
-    public function __construct($playbookArray, $args = null, OutputInterface $output, InputInterface $input, $command)
+    public function __construct($playbook, $args = null, OutputInterface $output, InputInterface $input, $command)
     {
 
         if ($args == null) {
@@ -45,21 +45,21 @@ class Parser
 
         $arrays = [];
 
-        if (stripos($playbookArray, ':version') !== false) {
+        if (stripos($playbook, ':version') !== false) {
             $arrays[':version'] = $args->version;
         }
 
-        if (stripos($playbookArray, ':repo') !== false) {
+        if (stripos($playbook, ':repo') !== false) {
             $arrays[':repo'] = ConfigReader::configGet('repo');
         }
 
         if (!empty($arrays)) {
             foreach ($arrays as $find => $replace) {
-                $playbookArray = str_replace($find, $replace, $playbookArray);
+                $playbook = str_replace($find, $replace, $playbook);
             }
         }
 
-        $this->playbook = Yaml::parse($playbookArray);
+        $this->playbook = Yaml::parse($playbook);
 
         $this->parsePlaybookContents();
         $this->walkPlaybook();
