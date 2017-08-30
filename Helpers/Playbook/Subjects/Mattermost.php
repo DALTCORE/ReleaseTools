@@ -25,6 +25,8 @@ class Mattermost
     ) {
         $mattermost = new \ThibaudDauce\Mattermost\Mattermost(new Client);
 
+        dd($options->message);
+
         $message = (new Message)
             ->text($options->message)
             ->channel($options->channel);

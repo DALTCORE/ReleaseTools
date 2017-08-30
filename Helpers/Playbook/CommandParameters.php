@@ -2,6 +2,7 @@
 
 namespace DALTCORE\ReleaseTools\Helpers\Playbook;
 
+use DALTCORE\ReleaseTools\Helpers\ConfigReader;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -16,6 +17,10 @@ class CommandParameters extends Argument
     {
         if ($name == 'version' && !isset($this->arguments[$name])) {
             $this->arguments[$name] = $this->askForVersion();
+        }
+
+        if ($name == 'repo' && !isset($this->arguments[$name])) {
+            $this->arguments[$name] = ConfigReader::configGet('repo');
         }
 
         return parent::__get($name);

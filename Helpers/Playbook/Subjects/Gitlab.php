@@ -2,7 +2,6 @@
 
 namespace DALTCORE\ReleaseTools\Helpers\Playbook\Subjects;
 
-use DALTCORE\ReleaseTools\Helpers\ConfigReader;
 use DALTCORE\ReleaseTools\Helpers\Playbook\CommandParameters;
 use DALTCORE\ReleaseTools\Helpers\Playbook\PlaybookParameters;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,14 +21,13 @@ class Gitlab
         PlaybookParameters $options, CommandParameters $parameters, OutputInterface $output, InputInterface $input
     ) {
 
-
         $options->validate([
             // key      => required|regex
             'branches'  => '/^(?<from_branch>.*) > (?<to_branch>.*)/',
             'milestone' => false,
         ]);
 
-        $output->writeln('Creating a merge request on ' . ConfigReader::configGet('repo'));
+        $output->writeln('Creating a merge request on ' . $parameters->repo);
         $output->writeln('From branch ' . $options->branches->from_branch . ' to ' .
             $options->branches->to_branch);
 

@@ -2,6 +2,7 @@
 
 namespace DALTCORE\ReleaseTools\Helpers\Playbook;
 
+use DALTCORE\ReleaseTools\Helpers\ConfigReader;
 use DALTCORE\ReleaseTools\Helpers\Exceptions\PlaybookSubjectMethodMissingException;
 use DALTCORE\ReleaseTools\Helpers\Exceptions\PlaybookSubjectMissingException;
 use Symfony\Component\Console\Input\InputInterface;
