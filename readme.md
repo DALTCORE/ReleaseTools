@@ -9,8 +9,7 @@ composer global require daltcore/release-tools
 
 or  
 Via executable:
-[Go to releases](https://github.com/DALTCORE/ReleaseTools/releases/latest)  
-and add this executable to your $PATH environment.
+[Go to releases](https://github.com/DALTCORE/ReleaseTools/releases/latest) and add this executable to your $PATH environment.
 
 Initialize ReleaseTools on current running repo. Creates .release-tools directory and .release-tool file.
 ```bash
@@ -26,7 +25,7 @@ _If you want to know more about thestructure behind ReleaseTools
 then you can use the `-v` flag behind every command to see the  
 verbose info_  
 
-_If a error occurs then you can add the `-vvv` parameter to the tool. A stack-trace will be shown_
+_If a error occurs then you can add the `-vvv` parameter to the tool. A stack-trace will be shown.
 
 ### Usage
 
@@ -69,7 +68,7 @@ release-tool list:changelog
 +-------------------+------------+---------------+--------------+
 ```
 
-## Building a stub:  
+#### Building a stub:  
 If you need to create a custom stub for `release-tool prepare` you can  
 create a file called `prepare.stub` in the directory `.release-tools/stubs`  
 
@@ -79,7 +78,19 @@ These files are markdown files and the following variables are available:
 
 This wil override as the issue template pushed to GitLab when releasing.
 
-## Building playbooks:
+Example:
+```markdown
+**Release `:repo` version `:version`**
+
+*Pre flight checks*
+* [ ] - Notify in `5_Releases`
+* [ ] - A
+* [ ] - B
+  * [ ] - C
+
+```
+
+#### Building playbooks:
 If you need to create a custom playbook for `release-tool playbook <playbook-name>` you can  
 create a file called `<name>.rtp` in the directory `.release-tools/playbooks`
 
@@ -114,7 +125,7 @@ playbook:
  
 The example contains all available methods for playbooks. 
 
-#### .release-tools file
+#### .release-tools file example
 ```yaml
 repo: group/repo
 api_url: https://gitlab.com
