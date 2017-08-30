@@ -14,3 +14,8 @@ playbook:
 
     merge_request:
       branches: master > develop
+
+  mattermost:
+    notify:
+      channel: 'releases'
+      message: '@channel We''re about to release version :version of the project :repo. Please stop merging now into develop until next announcement'
