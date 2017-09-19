@@ -54,7 +54,7 @@ class Gitlab
     public function make_branch(
         PlaybookParameters $options, CommandParameters $parameters, OutputInterface $output, InputInterface $input
     ) {
-        \DALTCORE\ReleaseTools\Helpers\Gitlab::createBranch($options->from, $options->to);
+        \DALTCORE\ReleaseTools\Helpers\Gitlab::createBranch($options->to, $options->from);
     }
 
     /**
