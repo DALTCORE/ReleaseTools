@@ -18,7 +18,10 @@ class Gitlab
      * @param \Symfony\Component\Console\Input\InputInterface            $input
      */
     public function merge_request(
-        PlaybookParameters $options, CommandParameters $parameters, OutputInterface $output, InputInterface $input
+        PlaybookParameters $options,
+        CommandParameters $parameters,
+        OutputInterface $output,
+        InputInterface $input
     ) {
 
         $options->validate([
@@ -31,16 +34,12 @@ class Gitlab
         $output->writeln('From branch ' . $options->branches->from_branch . ' to ' .
             $options->branches->to_branch);
 
-        if (\DALTCORE\ReleaseTools\Helpers\Gitlab::createBranch(
-            $options->branches->to_branch,
-            $options->branches->from_branch)
-        ) {
-            \DALTCORE\ReleaseTools\Helpers\Gitlab::prepareReleaseMergeRequest(
-                'Merge release ' . $parameters->version,
-                $options->branches->from_branch,
-                $options->branches->to_branch
-            );
-        }
+
+        \DALTCORE\ReleaseTools\Helpers\Gitlab::prepareReleaseMergeRequest(
+            'Merge release ' . $parameters->version,
+            $options->branches->from_branch,
+            $options->branches->to_branch
+        );
     }
 
     /**
@@ -52,7 +51,10 @@ class Gitlab
      * @param \Symfony\Component\Console\Input\InputInterface            $input
      */
     public function make_branch(
-        PlaybookParameters $options, CommandParameters $parameters, OutputInterface $output, InputInterface $input
+        PlaybookParameters $options,
+        CommandParameters $parameters,
+        OutputInterface $output,
+        InputInterface $input
     ) {
         \DALTCORE\ReleaseTools\Helpers\Gitlab::createBranch($options->to, $options->from);
     }
@@ -66,7 +68,10 @@ class Gitlab
      * @param \Symfony\Component\Console\Input\InputInterface            $input
      */
     public function tag(
-        PlaybookParameters $options, CommandParameters $parameters, OutputInterface $output, InputInterface $input
+        PlaybookParameters $options,
+        CommandParameters $parameters,
+        OutputInterface $output,
+        InputInterface $input
     ) {
         $description = "Release of version " . $parameters->version;
         $rev = $options->from;
