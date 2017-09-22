@@ -1,0 +1,6 @@
+---
+playbook:
+  mattermost:
+    notify:
+      channel: 'releases'
+      message: '@channel https://:repo.intotheaccept.com is live for acceptation now! :beers:'

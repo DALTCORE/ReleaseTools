@@ -3,4 +3,4 @@ playbook:
   gitlab:
     make_branch:
       from: develop
-      to: releases/:version
+      to: releases/v:version

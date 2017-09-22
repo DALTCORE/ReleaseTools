@@ -1,0 +1,5 @@
+---
+playbook:
+  gitlab:
+    merge_request:
+      branches: staging > develop

@@ -1,0 +1,6 @@
+---
+playbook:
+  gitlab:
+    tag:
+      from: master
+      version: v:version

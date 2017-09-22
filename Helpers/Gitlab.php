@@ -83,10 +83,10 @@ class Gitlab
         $project = new \Gitlab\Model\Project(ConfigReader::configGet('repo'), $client);
 
         $tag = new Tags($client);
-        dd($tag->create($project->id, [
+        $tag->create($project->id, [
             'tag_name'    => 'v' . $version,
             'ref'         => $rev,
             'description' => $description
-        ]));
+        ]);
     }
 }

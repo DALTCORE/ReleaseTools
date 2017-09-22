@@ -1,0 +1,6 @@
+---
+playbook:
+  mattermost:
+    notify:
+      channel: 'releases'
+      message: '@channel We''re done with releaseing :repo. Merging can start again.'

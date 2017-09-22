@@ -3,6 +3,3 @@ playbook:
   gitlab:
     merge_request:
       branches: releases/:version > staging
-
-    merge_request:
-      branches: staging > develop

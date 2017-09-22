@@ -1,7 +1,23 @@
 **Release `:repo` version `:version`**
 
-*Pre flight checks*
-* [ ] - Notify in `5_Releases`
-* [ ] - A
-* [ ] - B
-  * [ ] - C
+- [X] Create issue
+
+- [ ] Notify in Mattermost `release-tool playbook notify-upcomming-release` with `:version` as version
+
+- [ ] Merge develop > releases/v:version `release-tool playbook develop-to-release` with `:version` as version
+
+- [ ] Checkout releases/v:version `git fetch all; git checkout releases/v:version`
+
+- [ ] Generate changelog `release-tool build:changelog` with `:version` as version
+
+- [ ] MR releases/v:version > staging `release-tool playbook release-to-staging` with `:version` as version
+
+- [ ] Notify in Mattermost `release-tool playbook notify-accept` with `:version` as version
+
+- [ ] MR staging > develop `release-tool playbook staging-to-develop`
+
+- [ ] MR staging > master `release-tool playbook staging-to-master`
+
+- [ ] Create tag v:version `release-tool playbook create-tag` with `:version` as version
+
+- [ ] Notify in Mattermost `release-tool playbook release-done` with `:version` as version
