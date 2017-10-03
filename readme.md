@@ -1,4 +1,6 @@
 ## Release tools for Projects
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDALTCORE%2FReleaseTools.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FDALTCORE%2FReleaseTools?ref=badge_shield)
+
 
 ### Installation
 
@@ -132,3 +134,7 @@ api_url: https://gitlab.com
 api_key: AbC123DeF456Ghi789
 mattermost_webhook: https://mattermost.server.com/hooks/hook-uri
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDALTCORE%2FReleaseTools.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDALTCORE%2FReleaseTools?ref=badge_large)
